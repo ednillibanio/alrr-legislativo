@@ -39,6 +39,10 @@
 			<artifactId>alrr-core-utils</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>br.leg.rr.al.legislativo</groupId>
+			<artifactId>alrr-legislativo-jpa</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 		</dependency>
@@ -70,15 +74,6 @@
 			<groupId>org.jboss.spec.javax.annotation</groupId>
 			<artifactId>jboss-annotations-api_1.3_spec</artifactId>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-search-orm</artifactId>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>br.leg.rr.al.legislativo</groupId>
-			<artifactId>alrr-legislativo-jpa</artifactId>
 		</dependency>
 	</dependencies>
 </project>

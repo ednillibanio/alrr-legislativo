@@ -1,7 +1,7 @@
-/.settings/
 /target/
-/.project
-/.classpath
-/.factorypath
 /.apt_generated/
 /.apt_generated_tests/
+/.settings/
+/.classpath
+/.factorypath
+/.project

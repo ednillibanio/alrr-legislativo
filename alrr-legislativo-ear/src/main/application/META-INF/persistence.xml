@@ -4,20 +4,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
-	<!-- <persistence-unit name="alrr-autenticacao-persistence"> <provider>org.hibernate.ejb.HibernatePersistence</provider> 
-		DATA SOURCE <jta-data-source>java:jboss/datasources/commons-ds</jta-data-source> 
-		<jar-file>lib/alrr-seguranca-jpa-1.0.0.jar</jar-file> <properties> <property 
-		name="hibernate.default_schema" value="seguranca_schema" /> <property name="hibernate.show_sql" 
-		value="true" /> <property name="hibernate.format_sql" value="true" /> <property 
-		name="hibernate.connection.useUnicode" value="true" /> <property name="hibernate.connection.characterEncoding" 
-		value="UTF-8" /> <property name="log4j.logger.org.hibernate.SQL" value="debug" 
-		/> <property name="log4j.logger.org.hibernate.type" value="info" /> <property 
-		name="log4j.logger.org.hibernate.transaction" value="debug" /> <property 
-		name="hibernate.search.default.directory_provider" value="filesystem" /> 
-		<property name="hibernate.search.default.indexBase" value="./lucene/indexes" 
-		/> </properties> </persistence-unit> -->
-
-
 
 	<persistence-unit
 		name="alrr-legislativo-persistence-ear">
@@ -37,7 +23,7 @@
 		<class>br.leg.rr.al.legislativo.mesa.entity.MesaDiretora</class>
 		<class>br.leg.rr.al.legislativo.mesa.entity.MembroMesaDiretora</class>
 
-		<jar-file>lib/alrr-core-utils-1.0.0-SNAPSHOT.jar</jar-file>
+		<class>br.leg.rr.al.core.jpa.BaseEntity</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 		<validation-mode>AUTO</validation-mode>
 
@@ -56,9 +42,8 @@
 
 
 			<!-- Defines which scripts the persistence provider shall create. -->
-			<property
-				name="javax.persistence.schema-generation.database.action"
-				value="create" />
+			<!-- <property name="javax.persistence.schema-generation.database.action" 
+				value="create" /> -->
 
 			<!-- Defines how the schema shall be dropped. It can be done based on 
 				the mapping metadata, a script or a combination of both. -->

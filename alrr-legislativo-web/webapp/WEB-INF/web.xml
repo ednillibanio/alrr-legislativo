@@ -8,4 +8,9 @@
 		<name>alrr_core_web_template</name>
 		<name>alrr_legislativo_web_fragment</name>
 	</absolute-ordering>
+
+	<welcome-file-list>
+		<welcome-file>pagina-inicial.xhtml</welcome-file>
+		<welcome-file>index.xhtml</welcome-file>
+	</welcome-file-list>
 </web-app>

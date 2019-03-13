@@ -9,6 +9,7 @@
 	</parent>
 	<artifactId>alrr-legislativo-jpa</artifactId>
 	<name>alrr-legislativo-jpa</name>
+	<packaging>jar</packaging>
 	<description>Módulo Legislativo JPA</description>
 	<organization>
 		<name>Assembleia Legislativa de Roraima</name>
@@ -29,6 +30,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>br/leg/rr/al/legislativo/entity/Deputado.java</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.bsc.maven</groupId>
@@ -68,10 +74,6 @@
 				hibernate-validator-annotation-processor
 			</artifactId>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-search-orm</artifactId>
 		</dependency>
 	</dependencies>
 </project>

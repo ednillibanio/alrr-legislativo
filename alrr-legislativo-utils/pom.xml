@@ -7,6 +7,7 @@
   </parent>
   <artifactId>alrr-legislativo-utils</artifactId>
   <name>alrr-legislativo-utils</name>
+  <packaging>jar</packaging>
   <description>Módulo Legislativo Utils</description>
   <organization>
 		<name>Assembleia Legislativa de Roraima</name>
