@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:al="http://java.sun.com/jsf/composite/components/commons"
+	lang="pt-br">
+
+<p:dialog id="dlg-membro-mesa" widgetVar="dlg-membro-mesa"
+	showEffect="clip" hideEffect="clip" closeOnEscape="true"
+	showHeader="false" responsive="true" modal="true" resizable="false"
+	closable="false" appendTo="@(body)"
+	styleClass="ui-fluid ui-md-6 nopad" fitViewport="true">
+	<h:form id="frm-membro-mesa">
+		<p:tooltip />
+		<p:messages id="msgs-membro-mesa" escape="false" closable="true"
+			globalOnly="true" />
+		<p:panel header="Membro da Mesa" id="pnl-membro-mesa"
+			styleClass="nopad-left nopad-right">
+
+
+			<p:panelGrid id="grid-membro-mesa" columns="1" cellpadding="10"
+				styleClass="ui-panelgrid-blank" layout="grid">
+
+
+				<!-- NOME -->
+				<h:panelGroup>
+					<h:outputLabel value="Nome:" for="nome" />
+					<p:inputText id="nome" title="Nome do membro"
+						value="#{membroMesaDiretoraController.entity.nome}" label="Nome"
+						required="true" size="40">
+						<f:validateLength minimum="3" maximum="250" for="nome" />
+					</p:inputText>
+					<p:message for="nome" display="tooltip" />
+				</h:panelGroup>
+
+
+				
+			</p:panelGrid>
+
+			<!-- BOTOES -->
+			<f:facet name="footer">
+
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="ui-panelgrid-blank">
+
+
+					<!-- CANCELAR -->
+					<p:commandButton value="Fechar" id="btn-fechar"
+						title="Fechar" icon="fa fa-fw fa-times"  styleClass="btn-lg"
+						oncomplete="PF('dlg-membro-mesa').hide()" process="@this" />
+
+
+					<!-- SALVAR -->
+					<p:commandButton id="btn-salvar" title="Salvar" value="Salvar"
+						icon="fa fa-fw fa-floppy-o" styleClass="btn-lg"
+						action="#{membroMesaDiretoraController.salvar()}"
+						update="frm-membro-mesa" validateClient="true" />
+
+				</p:panelGrid>
+			</f:facet>
+		</p:panel>
+	</h:form>
+</p:dialog>
+</html>

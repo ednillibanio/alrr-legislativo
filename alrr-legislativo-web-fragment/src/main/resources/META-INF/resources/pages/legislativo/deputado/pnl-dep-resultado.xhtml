@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/components/commons"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough">
+
+
+	<!-- RESULTADO DA PESQUISA -->
+	<p:dataTable id="result" widgetVar="result"
+		value="#{deputadoController.dataModel}"
+		selection="#{deputadoController.entity}" var="deputado"
+		paginator="true" rows="15" rowsPerPageTemplate="9,15,30"
+		selectionMode="single" emptyMessage="Nenhum registro encontrado"
+		reflow="true" draggableColumns="true" paginatorPosition="top"
+		paginatorAlwaysVisible="true" styleClass="pnl-resultado">
+
+
+
+		<!-- TITULO DATATABLE -->
+		<f:facet name="header">
+			<h:outputLabel value="Resultado" />
+		</f:facet>
+		<!-- CHAMA MENU - BOTAO DIREITO -->
+		<p:ajax event="contextMenu" update="result" />
+
+		<!-- INCLUIR O DATA EXPORT AQUI. MAS PRA ISSO TEM QUE ARRUMAR O paginatorTemplate do datatable e incluir {Exporters} lá. -->
+
+
+		<!-- NOME -->
+		<p:column id="nome" sortBy="#{deputado.nome}" width="50%">
+			<f:facet name="header">
+				<h:outputText value="Nome" />
+			</f:facet>
+			<h:outputText value="#{deputado.nome}" />
+		</p:column>
+
+
+		<!-- PARTIDO POLITICO -->
+		<p:column id="sigla" sortBy="#{deputado.partido.sigla}" width="50%">
+			<f:facet name="header">
+				<h:outputText value="Partido" />
+			</f:facet>
+			<h:outputText value="#{deputado.partido.sigla}" />
+		</p:column>
+
+		<!-- SITUACAO -->
+		<p:column id="sit" sortBy="#{deputado.situacao}" width="20%"
+			headerText="Situação">
+			<h:outputText value="#{deputado.situacao.label}" />
+		</p:column>
+
+	</p:dataTable>
+
+	<!-- ContextMenu deve sempre vir depois do datable para funcionar a seleção pelo botão direito do mouse. -->
+	<p:contextMenu for="result">
+		<!-- ********* BOTAO DETALHES ********* -->
+		<p:menuitem value="Detalhes" action="#{deputadoController.detalhes()}"
+			update="frm-deputado" process="@this">
+		</p:menuitem>
+
+		<!-- ********* BOTAO EDITAR ********* -->
+		<p:menuitem value="Editar" update="frm-deputado" process="@this"
+			actionListener="#{deputadoController.editar()}">
+		</p:menuitem>
+
+		<!--	********* BOTAO EXCLUIR *********
+			<p:menuitem value="Excluir"
+				update=":dlg-deputado-excluir :frm-deputado-excluir"
+				oncomplete="PF('_dlgDeputadoExcluir').show()">
+			</p:menuitem>-->
+	</p:contextMenu>
+
+
+</ui:composition>

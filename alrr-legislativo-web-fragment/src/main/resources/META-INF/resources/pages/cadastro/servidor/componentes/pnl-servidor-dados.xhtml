@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/components/commons"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough">
+
+
+	<!--  C A M P O:  M A T R Í C U L A  -->
+	<h:panelGroup>
+		<p:outputLabel value="Matrícula" for="mat" />
+		<p:inputMask id="mat"
+			value="#{servidorPublicoController.entity.matricula}" required="true"
+			label="Matrícula" title="Informe a matrícula do servidor."
+			maxlength="8">
+		</p:inputMask>
+		<p:message for="mat" display="tooltip" />
+	</h:panelGroup>
+
+
+
+	<!--  C A M P O:  L O T A Ç Ã O  -->
+	<h:panelGroup>
+		<p:outputLabel value="Lotação" for="lotacao" />
+		<div class="ui-g">
+			<div class="ui-g-10 ui-md-10 ui-lg-10 ui-g-nopad">
+				<p:autoComplete value="#{servidorPublicoController.entity.lotacao}"
+					id="lotacao" label="Lotação" title="Informe a lotação do servidor."
+					completeMethod="#{lotacaoController.completarPorNome}" var="lot"
+					itemLabel="#{lot.nome.concat(' - ').concat(lot.local.label)}"
+					itemValue="#{lot}" converter="#{entityConverter}"
+					forceSelection="true" minQueryLength="3" size="40" maxResults="8"
+					emptyMessage="Nenhuma lotação encontrada" required="true">
+					<p:column>#{lot.nome} - #{loc.local.label}</p:column>
+				</p:autoComplete>
+			</div>
+
+			<!--  B O T Ã O:  N O V O  C A R G O  P Ú B L I C O   -->
+			<div class="ui-g-2 ui-md-2 ui-lg-2 ui-g-nopad">
+				<p:commandButton id="btn-lotacao-novo" styleClass="btn-g"
+					icon="fa fa-fw fa-file-text-o" title="Nova Lotação"
+					update="dlg-lotacao" process="@this"
+					action="#{lotacaoController.novo()}" />
+			</div>
+		</div>
+		<p:message for="lotacao" display="tooltip" />
+	</h:panelGroup>
+
+
+	<!--  C A M P O:  C A R G O  P Ú B L I C O  -->
+	<h:panelGroup>
+		<p:outputLabel value="Cargo" for="cargo" />
+		<div class="ui-g">
+			<div class="ui-g-10 ui-md-10 ui-lg-10 ui-g-nopad">
+				<p:autoComplete
+					value="#{servidorPublicoController.entity.cargoPublico}" id="cargo"
+					label="Cargo" title="Informe o cargo do servidor."
+					completeMethod="#{cargoPublicoController.completarPorNome}"
+					var="cargo"
+					itemLabel="#{cargo.nome.concat(' - ').concat(cargo.provimento.label)}"
+					itemValue="#{cargo}" converter="#{entityConverter}"
+					forceSelection="true" minQueryLength="3" size="40" maxResults="8"
+					emptyMessage="Nenhum cargo encontrado" required="true">
+					<p:column>#{cargo.nome} - #{cargo.provimento.label}</p:column>
+				</p:autoComplete>
+			</div>
+
+			<!--  B O T Ã O:  N O V O  C A R G O  P Ú B L I C O   -->
+			<div class="ui-g-2 ui-md-2 ui-lg-2 ui-g-nopad">
+				<p:commandButton id="btn-cargo-novo" styleClass="btn-g"
+					icon="fa fa-fw fa-file-text-o" title="Novo Cargo Público"
+					update="dlg-cargo-publico" process="@this"
+					action="#{cargoPublicoController.novo()}" />
+			</div>
+		</div>
+		<p:message for="cargo" display="tooltip" />
+	</h:panelGroup>
+
+
+
+	<!--  C A M P O:  D A T A   N O M E A Ç Ã O  -->
+	<h:panelGroup>
+		<p:outputLabel value="Data Exoneração" for="data-exoneracao" />
+		<p:inputMask id="data-exoneracao"
+			value="#{servidorPublicoController.entity.dataExoneracao}"
+			mask="99/99/9999" title="Informe a data de exoneração do servidor."
+			size="14" maxlength="12">
+			<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+		</p:inputMask>
+		<p:message for="data-nascimento" display="tooltip" />
+	</h:panelGroup>
+
+	<!--  C A M P O:  D A T A   E X O N E R A Ç Ã O  -->
+	<h:panelGroup>
+		<p:outputLabel value="Data Nomeação" for="data-nomeacao" />
+		<p:inputMask id="data-nomeacao"
+			value="#{servidorPublicoController.entity.dataNomeacao}"
+			mask="99/99/9999" title="Informe a data de nomeação do servidor."
+			size="14" maxlength="12">
+			<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+		</p:inputMask>
+		<p:message for="data-nascimento" display="tooltip" />
+	</h:panelGroup>
+
+
+</ui:composition>

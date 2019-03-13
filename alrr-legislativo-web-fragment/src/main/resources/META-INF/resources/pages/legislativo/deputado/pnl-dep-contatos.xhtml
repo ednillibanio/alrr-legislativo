@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/components/commons"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough">
+
+	<!-- CONTATOS -->
+	<p:panel header="Contatos" id="pnl-contatos">
+		<p:panelGrid columns="1" columnClasses="column"
+			styleClass="ui-panelgrid-blank" layout="grid">
+
+
+			<!-- CELULAR -->
+			<h:panelGroup>
+				<h:outputLabel value="Celular:" for="celular" />
+				<p:inputMask id="celular" value="#{deputadoController.celular}"
+					mask="?(99) 99999-9999" size="15"
+					label="#{bundle['pessoa.fisica.label.tel.celular']}"
+					converter="#{telefoneConverter}" />
+			</h:panelGroup>
+			<!-- Fixo -->
+			<h:panelGroup>
+				<h:outputLabel value="Fixo:" for="fixo" />
+				<p:inputMask id="fixo" value="#{deputadoController.fixo}"
+					mask="(99) 9999-9999" size="14" label="Telefone Fixo"
+					converter="#{telefoneConverter}" />
+			</h:panelGroup>
+
+
+			<!-- EMAIL -->
+			<h:panelGroup>
+				<!-- TODO: COLOCAR UM VALIDADOR PARA EMAIL TALVEZ. -->
+				<h:outputLabel value="Email:" for="email" />
+				<p:inputText id="email" title="Email do deputado(a)" type="email"
+					size="40" value="#{deputadoController.entity.email}"
+					maxlength="250" label="#{bundle['pessoa.label.email']}" />
+			</h:panelGroup>
+
+
+		</p:panelGrid>
+	</p:panel>
+
+</ui:composition>

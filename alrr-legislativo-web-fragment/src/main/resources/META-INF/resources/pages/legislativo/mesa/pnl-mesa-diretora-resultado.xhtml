@@ -1,0 +1,63 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:kmdr="http://java.sun.com/jsf/composite/components/commons"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+	<!-- RESULTADO DA PESQUISA -->
+	<p:dataTable id="result" widgetVar="result"
+		value="#{mesaDiretoraController.dataModel}"
+		selection="#{mesaDiretoraController.entity}" var="mesa"
+		paginator="true" rows="15" rowsPerPageTemplate="9,15,30"
+		selectionMode="single" emptyMessage="Nenhum registro encontrado"
+		reflow="true" draggableColumns="true" paginatorPosition="top"
+		paginatorAlwaysVisible="true">
+
+		<!-- TITULO DATATABLE -->
+		<f:facet name="header">
+			<h:outputLabel value="Resultado" />
+		</f:facet>
+		<!-- CHAMA MENU - BOTAO DIREITO -->
+		<p:ajax event="contextMenu" update="result" />
+
+
+		<!-- MEMBRO DA MESA DIRETORA -->
+		<p:column id="nome" sortBy="#{mesa.membro.nome}">
+			<f:facet name="header">
+				<h:outputText value="Membro da Mesa" />
+			</f:facet>
+			<h:outputText value="#{mesa.membro.nome}" />
+		</p:column> -->
+
+
+		<!-- CARGO -> MESA DIRETORA -->
+		<p:column sortBy="#{mesa.cargo.label}" id="cargo" width="30%"
+			headerText="Cargo">
+			<h:outputText value="#{mesa.cargo.label}" />
+		</p:column>
+
+		<!-- LEGISLATURA -->
+		<p:column sortBy="#{mesa.legislatura.nome}" id="legislatura"
+			width="20%" headerText="Legislatura">
+			<h:outputText value="#{mesa.legislatura.nome}" />
+		</p:column>
+
+	</p:dataTable>
+
+
+	<!-- ContextMenu deve sempre vir depois do datable para funcionar. -->
+	<p:contextMenu for="result">
+
+		<!-- ********* BOTAO EDITAR ********* -->
+		<p:menuitem value="Editar" update="frm-mesa-diretora" process="@this"
+			action="#{mesaDiretoraController.editar()}">
+		</p:menuitem>
+	</p:contextMenu>
+
+
+
+</ui:composition>

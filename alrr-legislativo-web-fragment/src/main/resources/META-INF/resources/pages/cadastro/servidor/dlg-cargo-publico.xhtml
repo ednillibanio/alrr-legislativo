@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://java.sun.com/jsf/composite/components/commons"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:o="http://omnifaces.org/ui" lang="pt-br">
+
+<p:dialog id="dlg-cargo-publico" widgetVar="dlg-cargo-publico"
+	showEffect="clip" hideEffect="clip" closeOnEscape="true"
+	showHeader="false" responsive="true" modal="true" resizable="false"
+	closable="false" appendTo="@(body)"
+	styleClass="ui-fluid ui-md-5 ui-lg-6 nopad" fitViewport="true">
+
+	<h:form id="frm-cargo-publico">
+		<p:tooltip />
+		<p:panel header="Cargo" id="pnl-cargo">
+			<p:growl id="msgs-cargo" escape="false" closable="true" />
+
+
+			<p:panelGrid id="grid-cargo" columns="1" columnClasses="column"
+				cellpadding="10" styleClass="ui-panelgrid-blank" layout="grid">
+
+
+				<!--  C A M P O:  N O M E   -->
+				<h:panelGroup>
+					<p:outputLabel value="Nome" for="nome-cargo" />
+					<p:inputText id="nome-cargo" title="Informe o nome do cargo"
+						required="true" value="#{cargoPublicoController.entity.nome}"
+						converter="#{capitalizeFullyConverter}">
+						<f:validateLength minimum="3" maximum="250" for="nome-cargo" />
+					</p:inputText>
+					<p:message for="nome-cargo" display="tooltip" />
+				</h:panelGroup>
+
+
+				<!--  C A M P O:  P R O V I M E N T O S   -->
+				<h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel value="Provimento" for="provimento" />
+						<p:selectOneMenu id="provimento"
+							title="Selecione um provimento para o cargo público."
+							value="#{cargoPublicoController.entity.provimento}"
+							required="true">
+							<f:selectItem noSelectionOption="true" itemLabel="[Selecione]" />
+							<f:selectItems value="#{servidorEnumFactory.provimentos}"
+								var="provimento" itemValue="#{provimento}"
+								itemLabel="#{provimento.label}" />
+						</p:selectOneMenu>
+					</h:panelGroup>
+				</h:panelGroup>
+			</p:panelGrid>
+
+
+			<!--  C A M P O:  S I T U A Ç Ã O -->
+			<h:panelGroup>
+				<p:outputLabel value="Situação" for="sit"
+					title="Informe a situação do cargo público." />
+				<p:selectOneButton id="sit" label="Situação" required="true"
+					value="#{cargoPublicoController.entity.situacao}"
+					converter="omnifaces.GenericEnumConverter">
+					<f:selectItems value="#{commonsEnumFactory.statusType}" var="sit"
+						itemValue="#{sit}" itemLabel="#{sit.label}" />
+				</p:selectOneButton>
+				<p:message for="sit" display="tooltip" />
+			</h:panelGroup>
+
+
+			<!--  C A M P O:  D E S C R I Ç Ã O -->
+			<h:panelGroup>
+				<p:outputLabel for="descricao" value="Descrição" />
+				<p:inputTextarea rows="3" id="descricao"
+					value="#{cargoPublicoController.entity.descricao}" />
+				<p:message for="descricao" display="tooltip" />
+			</h:panelGroup>
+
+
+			<!-- B O T O E S -->
+			<f:facet name="footer">
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Fechar" id="btn-fechar" title="Fechar"
+						icon="fa fa-fw fa-times"
+						oncomplete="PF('dlg-cargo-publico').hide()" styleClass="btn-lg"
+						process="@this" />
+					<p:commandButton id="btn-salvar" value="Salvar"
+						icon="fa fa-fw fa-floppy-o"
+						action="#{cargoPublicoController.salvar()}" validateClient="true"
+						styleClass="btn-lg" update="frm-cargo-publico" />
+
+				</p:panelGrid>
+			</f:facet>
+		</p:panel>
+	</h:form>
+</p:dialog>
+</html>

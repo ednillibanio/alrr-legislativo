@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://java.sun.com/jsf/composite/components/commons"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:o="http://omnifaces.org/ui" lang="pt-br">
+
+<p:dialog id="dlg-lotacao" widgetVar="dlg-lotacao" showEffect="clip"
+	hideEffect="clip" closeOnEscape="true" showHeader="false"
+	responsive="true" modal="true" resizable="false" closable="false"
+	appendTo="@(body)" styleClass="ui-fluid ui-md-5 ui-lg-6 nopad"
+	fitViewport="true">
+
+	<h:form id="frm-lotacao">
+		<p:tooltip />
+		<p:panel header="Lotação" id="pnl-lotacao">
+			<p:growl id="msgs-lotacao" escape="false" closable="true" />
+
+
+			<p:panelGrid id="grid-lotacao" columns="1" columnClasses="column"
+				cellpadding="10" styleClass="ui-panelgrid-blank" layout="grid">
+
+				<!--  C A M P O:  L O T A Ç Ã O  L O C A L  -->
+				<h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel value="Local" for="local" />
+						<p:selectOneMenu id="local"
+							title="Selecione um local para a lotação."
+							value="#{lotacaoController.entity.local}" required="true">
+							<f:selectItem noSelectionOption="true" itemLabel="[Selecione]" />
+							<f:selectItems value="#{servidorEnumFactory.lotacaoLocais}"
+								var="local" itemValue="#{local}" itemLabel="#{local.label}" />
+							<p:ajax process="@this" update="@form" />
+						</p:selectOneMenu>
+					</h:panelGroup>
+				</h:panelGroup>
+
+				<!--  C A M P O:  L O T A Ç Ã O  S U P E R I O R  -->
+				<h:panelGroup>
+					<p:outputLabel value="Lotação Superior" for="lotacao" />
+					<p:autoComplete value="#{servidorPublicoController.entity.lotacao}"
+						id="lotacao" label="Lotação"
+						title="Informe a lotação do superior." dropdown="true"
+						completeMethod="#{lotacaoController.completarPorNome}" var="lot"
+						itemLabel="#{lot.nome}" itemValue="#{lot}"
+						converter="#{entityConverter}" forceSelection="true"
+						minQueryLength="3" size="40" maxResults="8"
+						emptyMessage="Nenhuma lotação encontrada" required="true"
+						disabled="#{lotacaoController.entity.local == null}">
+						<p:column>#{lot.nome}</p:column>
+					</p:autoComplete>
+				</h:panelGroup>
+
+				<!--  C A M P O:  N O M E   -->
+				<h:panelGroup>
+					<p:outputLabel value="Nome" for="nome-lotacao" />
+					<p:inputText id="nome-lotacao" title="Informe o nome da lotação"
+						required="true" value="#{lotacaoController.entity.nome}"
+						converter="#{capitalizeFullyConverter}"
+						disabled="#{lotacaoController.entity.local == null}">
+						<f:validateLength minimum="3" maximum="250" for="nome-lotacao" />
+					</p:inputText>
+					<p:message for="nome-lotacao" display="tooltip" />
+				</h:panelGroup>
+
+
+				<!--  C A M P O:  S I T U A Ç Ã O -->
+				<h:panelGroup>
+					<p:outputLabel value="Situação" for="sit"
+						title="Informe a situação do lotacao público." />
+					<p:selectOneButton id="sit" label="Situação" required="true"
+						value="#{lotacaoController.entity.situacao}"
+						converter="omnifaces.GenericEnumConverter">
+						<f:selectItems value="#{commonsEnumFactory.statusType}" var="sit"
+							itemValue="#{sit}" itemLabel="#{sit.label}" />
+					</p:selectOneButton>
+					<p:message for="sit" display="tooltip" />
+				</h:panelGroup>
+
+
+				<!--  C A M P O:  D E S C R I Ç Ã O -->
+				<h:panelGroup>
+					<p:outputLabel for="descricao" value="Descrição" />
+					<p:inputTextarea rows="3" id="descricao"
+						value="#{lotacaoController.entity.descricao}" />
+					<p:message for="descricao" display="tooltip" />
+				</h:panelGroup>
+
+			</p:panelGrid>
+
+			<!-- B O T O E S -->
+			<f:facet name="footer">
+				<p:panelGrid columns="2" layout="grid"
+					styleClass="ui-panelgrid-blank">
+					<p:commandButton value="Fechar" id="btn-fechar" title="Fechar"
+						icon="fa fa-fw fa-times" oncomplete="PF('dlg-lotacao').hide()"
+						styleClass="btn-lg" process="@this" />
+					<p:commandButton id="btn-salvar" value="Salvar"
+						icon="fa fa-fw fa-floppy-o" action="#{lotacaoController.salvar()}"
+						validateClient="true" styleClass="btn-lg" update="frm-lotacao" />
+
+				</p:panelGrid>
+			</f:facet>
+		</p:panel>
+	</h:form>
+</p:dialog>
+</html>

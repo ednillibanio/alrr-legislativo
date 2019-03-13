@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<!--
+/****************************************************************************************
+* ALE-RR Licença																		*
+* Copyright (C) 2018, ALE-RR															*
+* Boa Vista, RR - Brasil																*
+* Todos os direitos reservados.															*
+* 																						*
+* Este programa é propriedade da Assembleia Legislativa do Estado de Roraima e 			*
+* não é permitida a distribuição, alteração ou cópia da mesma sem prévia autoriazação.	*
+*																						*
+*																						*
+*****************************************************************************************
+* Autor:  Ednil Libanio da Costa Junior													*
+* Versão: 1.0.0 																		*
+****************************************************************************************/
+-->
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/componentes/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:alcore="http://al.rr.leg.br/facelets/core"
+	xmlns:alloc="http://al.rr.leg.br/facelets/localidade"
+	xmlns:alcommons="http://al.rr.leg.br/facelets/commons"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" lang="pt-br">
+
+<ui:composition template="/dialog.xhtml">
+
+	<!--   P A R A M E T R O S   D E   C O N F I G U R A Ç Ã O   -->
+	<!--   D O   T E M P L A T E:   D I A L O G   -->
+	<ui:param name="dlgid" value="dlg-legislatura" />
+	<ui:param name="widgetVar" value="dlg-legislatura" />
+	<ui:param name="frmid" value="frm-legislatura" />
+	<ui:param name="panelheader" value="Cadastro de Legislatura" />
+	<ui:param name="columns" value="1" />
+
+	<ui:define name="form-dialog">
+		<p:defaultCommand target="frm-legislatura:btn-salvar" />
+	</ui:define>
+
+	<!-- ####################################### -->
+	<!--   C O N T E Ú D O   D O   D I A L O G   -->
+	<!-- ####################################### -->
+	<ui:define name="dialog-content">
+
+
+		<!--   C A M P O:   N O M E   -->
+		<al:campo value="Nome" for="nome-legislatura">
+			<div class="ui-inputgroup">
+				<p:inputText id="nome-legislatura" title="Nome da legislatura"
+					label="Nome" required="true"
+					value="#{legislaturaController.entity.nome}">
+					<f:validateLength minimum="3" maximum="100" for="nome-legislatura" />
+				</p:inputText>
+				<alcore:botao-capitalizar
+					actionListener="#{legislaturaController.capitalizeNome()}"
+					update="nome-legislatura" process="nome-legislatura @this" />
+
+			</div>
+		</al:campo>
+
+
+		<!--   C A M P O:   ANO INICIO   -->
+		<al:campo value="Ano Início" for="anoinicio">
+			<p:inputText id="anoinicio" title="Início do período da legislatura"
+				value="#{legislaturaController.entity.anoInicio}">
+				<f:validateLength minimum="4" maximum="4" for="anoinicio" />
+				<f:validateLongRange minimum="1950" maximum="2050" />
+			</p:inputText>
+		</al:campo>
+
+		<!--   C A M P O:   ANO FIM   -->
+		<al:campo value="Ano Fim" for="anofim">
+			<p:inputText id="anofim" title="Fim do período da legislatura"
+				value="#{legislaturaController.entity.anoFim}">
+				<f:validateLength minimum="4" maximum="4" for="anofim" />
+				<f:validateLongRange minimum="1950" maximum="2050" for="anofim" />
+			</p:inputText>
+		</al:campo>
+
+		<!--   C A M P O:  S I T U A Ç Ã O  -->
+		<al:campo value="Situação" for="situacao">
+			<al:select-situacao-button id="situacao"
+				value="#{legislaturaController.entity.situacao}" required="true" />
+		</al:campo>
+
+
+	</ui:define>
+
+
+	<!-- ################################### -->
+	<!--   R O D A P É   D O   D I A L O G   -->
+	<!-- ################################### -->
+
+	<!--   B O T Ã O:   F E C H A R   -->
+	<ui:define name="btn-esquerda">
+		<alcore:botao-fechar id="btnfechar"
+			oncomplete="PF('dlg-legislatura').hide()" immediate="true" />
+	</ui:define>
+
+	<!--   B O T Ã O:   S A L V A R   -->
+	<ui:define name="btn-direita">
+		<alcore:botao-salvar id="btnsalvar"
+			action="#{legislaturaController.salvar()}" validateClient="true"
+			update="frm-legislatura @(.result)" process="@form" />
+	</ui:define>
+
+</ui:composition>
+</html>

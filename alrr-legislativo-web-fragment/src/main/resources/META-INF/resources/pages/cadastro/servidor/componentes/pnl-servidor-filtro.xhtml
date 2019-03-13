@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/components/commons"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough">
+
+	<!--   F I L T R O   D E   P E S Q U I S A   -->
+	<p:panel header="Filtros" toggleable="true">
+
+		<div class="ui-fluid">
+			<p:panelGrid columns="4" layout="grid"
+				styleClass="ui-panelgrid-blank"
+				columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+				id="pnl-filtro">
+
+				<!--  F I L T R O:  M A T R Í C U L A  -->
+				<p:outputLabel value="Matrícula" for="matricula" />
+				<p:inputText id="matricula" label="Matrícula"
+					value="#{servidorPublicoController.matricula}" />
+
+
+				<!--  F I L T R O:  N O M E  -->
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText id="nome" label="Nome"
+					value="#{servidorPublicoController.nome}" />
+
+
+				<!--  F I L T R O:  P R O V I M E N T O   -->
+				<p:outputLabel value="Provimento" label="Provimento"
+					for="provimento" />
+				<p:selectCheckboxMenu id="provimento" multiple="true"
+					value="#{servidorPublicoController.provimentos}"
+					converter="omnifaces.GenericEnumConverter">
+					<f:selectItems value="#{servidorEnumFactory.provimentos}"
+						var="prov" itemValue="#{prov}" itemLabel="#{prov.label}" />
+				</p:selectCheckboxMenu>
+
+
+				<!--  F I L T R O:  S I T U A Ç Ã O   -->
+				<p:outputLabel value="Situação" for="sit" />
+				<p:selectCheckboxMenu id="sit" multiple="true"
+					value="#{servidorPublicoController.situacoesSelecionados}"
+					converter="omnifaces.GenericEnumConverter">
+					<f:selectItems
+						value="#{servidorEnumFactory.situacoesServidorPublico}" var="sit"
+						itemValue="#{sit}" itemLabel="#{sit.label}" />
+				</p:selectCheckboxMenu>
+
+				<!--  F I L T R O:  L O T A Ç Ã O   -->
+				<p:outputLabel value="Lotação" for="lotacao" />
+				<p:autoComplete id="lotacao" multiple="true" dropdown="true"
+					value="#{servidorPublicoController.lotacoesSelecionadas}"
+					converter="#{entityConverter}" var="lot"
+					completeMethod="#{servidorPublicoController.completarLotacao}"
+					itemValue="#{lot}" itemLabel="#{lot.nome}" forceSelection="true"
+					emptyMessage="Nenhuma lotação encontrada">
+					<p:ajax event="itemSelect" process="@this" />
+					<p:ajax event="itemUnselect" process="@this" />
+					<p:ajax resetValues="true" />
+				</p:autoComplete>
+
+
+				<!--  F I L T R O:  L O T A Ç Ã O   -->
+				<p:outputLabel value="Cargo" for="cargo" />
+				<p:autoComplete id="cargo" multiple="true"
+					value="#{servidorPublicoController.cargosSelecionados}"
+					converter="#{entityConverter}" dropdown="true"
+					completeMethod="#{servidorPublicoController.completarCargo}"
+					var="cargo" itemValue="#{cargo}" itemLabel="#{cargo.nome}"
+					forceSelection="true"
+					emptyMessage="Nenhum cargo público encontrado">
+					<p:ajax event="itemSelect" process="@this" />
+					<p:ajax event="itemUnselect" process="@this" />
+					<p:ajax resetValues="true" />
+				</p:autoComplete>
+
+			</p:panelGrid>
+			<o:validateOneOrMore id="validar"
+				components="matricula nome provimento sit lotacao cargo"
+				message="Informe pelo menos um filtro." />
+
+
+		</div>
+
+		<f:facet name="footer">
+			<div class="ui-g">
+
+				<!-- PESQUISAR -->
+				<div class="ui-lg-2 ui-md-2" />
+				<div class="ui-g-12 ui-lg-4 ui-md-4 ui-fluid">
+					<p:commandButton id="btn-pesquisar" value="Pesquisar"
+						styleClass="btn-lg" icon="fa fa-fw fa-search" title="Pesquisar"
+						action="#{servidorPublicoController.pesquisar()}"
+						update="@form result">
+					</p:commandButton>
+				</div>
+
+
+				<!-- LIMPAR -->
+				<div class="ui-g-12 ui-lg-4 ui-md-4 ui-fluid">
+					<p:commandButton value="Limpar" id="btn-limpar" styleClass="btn-lg"
+						icon="fa fa-fw fa-refresh" title="Limpar"
+						actionListener="#{servidorPublicoController.limpar()}"
+						update="frm-servidor-pesquisar" process="@this">
+						<o:ignoreValidationFailed />
+					</p:commandButton>
+				</div>
+				<div class="ui-lg-2 ui-md-2" />
+			</div>
+		</f:facet>
+
+	</p:panel>
+</ui:composition>

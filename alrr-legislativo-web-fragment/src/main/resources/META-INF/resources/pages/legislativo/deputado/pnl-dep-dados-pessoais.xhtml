@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/components/commons"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough">
+
+
+
+	<p:panelGrid columns="2" styleClass="ui-panelgrid-blank" layout="grid">
+
+
+		<!-- PAINEL DE IMAGEM -->
+		<p:panelGrid columns="1" styleClass="ui-panelgrid-blank nopad"
+			layout="grid">
+
+			<!-- IMAGEM (FOTO) -->
+			<p:outputPanel id="pnl-foto">
+				<p:graphicImage id="foto-vazia"
+					rendered="#{deputadoController.imagemHelper.imagem== null}"
+					stream="false" styleClass="foto-selecionada"
+					url="http://placehold.it/200x300">
+				</p:graphicImage>
+				<p:graphicImage id="foto"
+					value="#{contatoPFController.imagemHelper.imagemStreamed}"
+					stream="false" styleClass="foto-selecionada"
+					rendered="#{deputadoController.imagemHelper.imagem != null}">
+				</p:graphicImage>
+			</p:outputPanel>
+
+			<!-- GRUPO DE BOTOES -->
+			<p:panelGrid columns="1" columnClasses="column"
+				styleClass="ui-panelgrid-blank nopad" layout="grid">
+
+				<!-- ESCOLHER IMAGEM -->
+				<p:commandButton value="Escolher..." id="btn-escolher-imagem"
+					title="Escolher..." icon="fa fa-fw fa-upload" process="@this"
+					update="dlg-escolher-imagem"
+					oncomplete="PF('dlg-escolher-imagem').show();" styleClass="btn-lg" />
+
+
+				<!-- CAPTURAR IMAGEM -->
+				<p:commandButton value="Capturar" id="btn-capturar-imagem"
+					title="Capturar" icon="fa fa-fw fa-camera" process="@this"
+					update="dlg-capturar-imagem frm-imagem"
+					actionListener="#{deputadoController.ativarWebCam}"
+					oncomplete="PF('dlg-capturar-imagem').show();" styleClass="btn-lg"
+					onsuccess="PF('dlg-capturar-imagem').initPosition();" />
+
+			</p:panelGrid>
+
+
+			<!-- NOME -->
+			<h:panelGroup>
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText id="nome" title="Nome do deputado(a)"
+					value="#{deputadoController.entity.nome}" label="Nome"
+					required="true" size="40">
+					<f:validateLength minimum="3" maximum="250" for="nome" />
+				</p:inputText>
+				<p:message for="nome" display="tooltip" />
+			</h:panelGroup>
+
+
+			<!-- SEXO -->
+			<h:panelGroup>
+				<p:outputLabel value="Sexo" for="sexo" />
+				<p:selectOneButton id="sexo" label="Sexo" required="true"
+					value="#{deputadoController.entity.sexo}"
+					converter="omnifaces.GenericEnumConverter">
+					<f:selectItems value="#{cadastroEnumFactory.sexos}" var="sexo"
+						itemValue="#{sexo}" itemLabel="#{sexo.label}" />
+				</p:selectOneButton>
+				<p:message for="sexo" display="tooltip" />
+			</h:panelGroup>
+
+			<!-- TODO: IMPLEMENTAR AJAX QUE VERIFICA SE CPF JÁ EXISTE. -->
+			<!-- CPF -->
+			<h:panelGroup>
+				<p:outputLabel value="Cpf" for="cpf" />
+				<p:inputMask id="cpf" value="#{deputadoController.entity.cpf}"
+					label="Cpf" title="Cpf do deputado" converter="#{cpfConverter}"
+					size="14" maxlength="11" mask="999.999.999-99">
+				</p:inputMask>
+			</h:panelGroup>
+
+
+			<!-- TODO: Colocar validação para aceitar apenas a-z ou A-Z -->
+
+
+
+
+		</p:panelGrid>
+
+		<p:panelGrid columns="1" columnClasses="column"
+			styleClass="ui-panelgrid-blank" layout="grid">
+
+
+			<!-- ESTADO CIVIL -->
+			<h:panelGroup>
+				<p:outputLabel value="Estado Civil" for="estado-civil" />
+				<p:selectOneMenu value="#{deputadoController.entity.estadoCivil}"
+					id="estado-civil" label="Estado Civil">
+					<f:selectItem noSelectionOption="true" itemLabel="[Selecione]"
+						itemDisabled="true" />
+					<f:selectItems value="#{cadastroEnumFactory.estadosCivis}"
+						var="estcivil" itemValue="#{estcivil}"
+						itemLabel="#{estcivil.label}" />
+				</p:selectOneMenu>
+				<p:message for="estado-civil" display="tooltip" />
+			</h:panelGroup>
+
+			<!-- DATA NASCIMENTO -->
+			<h:panelGroup>
+				<p:outputLabel value="Data Nascimento" for="dataNascimento" />
+				<p:inputMask id="dataNascimento"
+					value="#{deputadoController.entity.dataNascimento}"
+					mask="99/99/9999"
+					label="#{bundle['pessoa.fisica.label.data.nascimento']}" size="14"
+					maxlength="12">
+					<f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+				</p:inputMask>
+			</h:panelGroup>
+
+
+
+			<!-- NATURALIDADE -->
+			<h:panelGroup>
+				<p:outputLabel value="Naturalidade" for="naturalidade" />
+				<div class="ui-grid-row">
+					<div class="ui-md-11 ui-lg-11 nopad-left nopad-right">
+						<p:autoComplete value="#{deputadoController.entity.naturalidade}"
+							id="naturalidade" label="Naturalidade" title="Naturalidade"
+							completeMethod="#{localidadeCompleteController.completeByNome}"
+							var="loc" itemLabel="#{loc.nome.concat(' - ').concat(loc.uf)}"
+							itemValue="#{loc}" converter="#{entityConverter}"
+							forceSelection="true" minQueryLength="3" size="40" maxResults="8"
+							emptyMessage="Nenhum município encontrado">
+							<p:column>#{loc.nome} - #{loc.uf}</p:column>
+						</p:autoComplete>
+						<p:message for="naturalidade" id="msg-loc" display="tooltip" />
+					</div>
+
+					<!-- NOVA LOCALIDADE -->
+					<div class="ui-md-1 ui-lg-1 nopad-left nopad-right">
+						<p:commandButton id="btn-add-nat" icon="fa fa-fw fa-file-text-o"
+							title="Nova Localidade" process="@this" update="dlg-localidade"
+							action="#{localidadeController.novo()}" />
+					</div>
+
+				</div>
+			</h:panelGroup>
+
+			<!-- PARTIDO POLITICO -->
+			<h:panelGroup>
+				<p:outputLabel value="Partido" for="partido" />
+				<p:autoComplete id="partido" required="true" dropdown="true"
+					value="#{deputadoController.entity.partido}"
+					label="Partido Político" title="Partido Político"
+					completeMethod="#{partidoPoliticoCompleteController.completePorSigla}"
+					var="partido"
+					itemLabel="#{partido.sigla.concat(' - ').concat(partido.nome)}"
+					itemValue="#{partido}" converter="#{entityConverter}"
+					forceSelection="true" maxResults="8"
+					emptyMessage="Nenhum partido político encontrado">
+					<p:column>#{partido.sigla} - #{partido.nome}</p:column>
+				</p:autoComplete>
+				<p:message for="partido" id="msg-partido" display="tooltip" />
+			</h:panelGroup>
+
+			<p:panel header="Contatos" id="pnl-contatos">
+				<p:panelGrid columns="1" columnClasses="nopad"
+					styleClass="ui-panelgrid-blank" layout="grid">
+
+
+					<!-- CELULAR -->
+					<h:panelGroup>
+						<p:outputLabel value="Celular" for="celular" />
+						<p:inputMask id="celular" value="#{deputadoController.celular}"
+							mask="?(99) 99999-9999" size="15"
+							label="#{bundle['pessoa.fisica.label.tel.celular']}"
+							converter="#{telefoneConverter}" />
+					</h:panelGroup>
+					<!-- Fixo -->
+					<h:panelGroup>
+						<p:outputLabel value="Fixo" for="fixo" />
+						<p:inputMask id="fixo" value="#{deputadoController.fixo}"
+							mask="(99) 9999-9999" size="14" label="Telefone Fixo"
+							converter="#{telefoneConverter}" />
+					</h:panelGroup>
+
+
+					<!-- EMAIL -->
+					<h:panelGroup>
+						<!-- TODO: COLOCAR UM VALIDADOR PARA EMAIL TALVEZ. -->
+						<p:outputLabel value="Email" for="email" />
+						<p:inputText id="email" title="Email do deputado(a)" type="email"
+							size="40" value="#{deputadoController.entity.email}"
+							maxlength="250" label="#{bundle['pessoa.label.email']}" />
+					</h:panelGroup>
+
+
+				</p:panelGrid>
+			</p:panel>
+		</p:panelGrid>
+	</p:panelGrid>
+</ui:composition>

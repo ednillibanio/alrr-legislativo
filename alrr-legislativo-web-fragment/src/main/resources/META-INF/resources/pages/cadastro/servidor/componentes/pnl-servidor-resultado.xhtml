@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/components/commons"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough">
+
+
+	<!-- RESULTADO DA PESQUISA -->
+	<p:dataTable id="result" value="#{servidorPublicoController.dataModel}"
+		selection="#{servidorPublicoController.entity}" var="servidor"
+		paginator="true" rows="15" rowsPerPageTemplate="9,15,30"
+		selectionMode="single" emptyMessage="Nenhum registro encontrado"
+		reflow="true"
+		paginatorTemplate="{Exporters} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		draggableColumns="true" paginatorPosition="top"
+		paginatorAlwaysVisible="true" styleClass="pnl-resultado">
+
+
+		<!--  T I T U L O  D A T A T A B L E -->
+		<f:facet name="header">
+			<h:outputLabel value="Resultado" />
+		</f:facet>
+
+		<f:facet name="{Exporters}">
+			<div style="float: right !important">
+				<p:commandLink ajax="false">
+					<p:graphicImage library="img" name="excel.png" width="32" />
+					<p:dataExporter type="xls" target="result" fileName="pfs" />
+				</p:commandLink>
+				<p:commandLink ajax="false">
+					<p:graphicImage library="img" name="pdf.png" width="32" />
+					<p:dataExporter type=" pdf" target="result" fileName="pfs" />
+				</p:commandLink>
+				<p:commandLink ajax="false">
+					<p:graphicImage library="img" name="csv.png" width="32" />
+					<p:dataExporter type="csv" target="result" fileName="pfs" />
+				</p:commandLink>
+
+			</div>
+		</f:facet>
+
+		<p:ajax event="contextMenu" update=":frm-servidor-pesquisar:result" />
+
+
+		<!--  C A M P O:  N O M E  -->
+		<p:column id="nome" sortBy="#{servidor.pessoaFisica.nome}" width="25%"
+			headerText="Nome">
+			<h:outputText value="#{servidor.pessoaFisica.nome}" />
+		</p:column>
+
+
+		<!--  C A M P O:  M A T R Í C U L A  -->
+		<p:column sortBy="#{servidor.matricula}" id="mat"
+			headerText="Matrícula" width="10%">
+			<h:outputText value="#{servidor.matricula}" />
+		</p:column>
+
+
+		<!--  C A M P O:  C A R G O  P Ú B L I C O  -->
+		<p:column sortBy="#{servidor.cargoPublico.nome}" id="cargo"
+			width="20%" headerText="Cargo Público">
+			<h:outputText value="#{servidor.cargoPublico.nome}" />
+		</p:column>
+
+
+		<!--  C A M P O:  P R O V I M  E N T O  -->
+		<p:column sortBy="#{servidor.cargoPublico.provimento}" id="prov"
+			width="10%" headerText="Provimento">
+			<h:outputText value="#{servidor.cargoPublico.provimento.label}" />
+		</p:column>
+
+
+		<!--  C A M P O:  L O T A  Ç Ã O  -->
+		<p:column sortBy="#{servidor.lotacao.nome}" id="lotacao" width="25%"
+			headerText="Lotação">
+			<h:outputText value="#{servidor.lotacao.nome}" />
+		</p:column>
+
+
+		<!--  C A M P O:  S I T U A Ç Ã O  -->
+		<p:column sortBy="#{servidor.situacao}" id="sit" width="10%"
+			headerText="Situação">
+			<h:outputText value="#{servidor.situacao.label}" />
+		</p:column>
+
+
+	</p:dataTable>
+
+	<!-- ContextMenu deve sempre vir depois do datable para funcionar a seleção pelo botão direito do mouse. -->
+	<p:contextMenu for="result">
+
+		<!-- ********* BOTAO DETALHES ********* -->
+		<!-- <p:menuitem value="Detalhes"
+				action="#{pfController.detalhes()}"
+				update=":frm-pf-detalhes :frm-pf-detalhes:pnl-detalhes">
+			</p:menuitem> -->
+
+
+		<!--  B O T Ã O:  E D I T A R  -->
+		<p:menuitem value="Editar"
+			action="#{servidorPublicoController.editar()}" />
+
+	</p:contextMenu>
+
+
+</ui:composition>

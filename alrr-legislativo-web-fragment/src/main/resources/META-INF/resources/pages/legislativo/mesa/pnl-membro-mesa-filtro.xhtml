@@ -1,0 +1,50 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://java.sun.com/jsf/composite/components/commons"
+	xmlns:o="http://omnifaces.org/ui">
+
+
+	<p:panelGrid columns="6" layout="grid"
+		styleClass="ui-panelgrid-blank ui-fluid" id="pnl-filtro"
+		columnClasses="ui-grid-col-1, ui-grid-col-5">
+
+		<!-- NOME DO MEMBRO DA MESA -->
+		<p:outputLabel value="Nome:" for="membro" />
+		<p:inputText id="membro" label="Membro da Mesa" />
+
+
+
+	</p:panelGrid>
+
+	<p:spacer height="10" />
+
+	<f:facet name="footer">
+		<div class="ui-g">
+			<div class="ui-lg-2 ui-md-2" />
+			<div class="ui-g-12 ui-lg-4 ui-md-4 ui-fluid">
+
+
+				<!-- PESQUISAR -->
+				<p:commandButton id="btn-pesquisar" value="Pesquisar"
+					icon="fa fa-fw fa-search" title="Pesquisar"
+					action="#{membroMesaDiretoraController.pesquisar()}"
+					process="@this" update="@form result">
+				</p:commandButton>
+			</div>
+
+
+			<!-- LIMPAR -->
+			<div class="ui-g-12 ui-lg-4 ui-md-4 ui-fluid">
+				<p:commandButton value="Limpar" id="btn-limpar" title="Limpar"
+					icon="fa fa-fw fa-refresh" />
+			</div>
+
+
+			<div class="ui-lg-2 ui-md-2" />
+		</div>
+	</f:facet>
+
+</ui:composition>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://java.sun.com/jsf/composite/components/commons"
+	xmlns:c="http://java.sun.com/jsp/jstl/core" lang="pt-br"
+	xmlns:o="http://omnifaces.org/ui">
+
+<ui:composition template="/default.xhtml">
+
+	<ui:define name="content">
+		<div class="ui-responsive">
+
+
+			<h:form id="frm-pg-mesa-diretora">
+				<p:panel>
+					<h1>Mesa Diretora</h1>
+					<p:separator />
+
+					<!-- BOTAO ADICIONAR MEMBRO -->
+					<div class="ui-g ui-fluid">
+						<div class="ui-lg-3 ui-md-3 ui-g-12 nopad-left">
+							<p:commandButton value="Adicionar Membro"
+								id="btn-membro-adicionar"
+								title="Adicionar Membro na Mesa Diretora"
+								action="#{mesaDiretoraController.novo()}"
+								icon="fa fa-fw fa-file-text" process="@this"
+								update="dlg-mesa-diretora" />
+						</div>
+					</div>
+
+					<p:spacer height="5" />
+					<p:growl id="msgs" showDetail="true" sticky="true" />
+
+
+					<!-- FILTRO DE PESQUISA -->
+					<p:panel header="Filtros" toggleable="true">
+						<ui:include src="componentes/pnl-mesa-diretora-filtro.xhtml" />
+					</p:panel>
+
+					<!-- RESULTADO PESQUISA -->
+					<p:outputPanel
+						rendered="#{mesaDiretoraController.entities.size()>0}">
+						<p:spacer height="35" />
+						<p:separator />
+
+						<ui:include src="componentes/pnl-mesa-diretora-resultado.xhtml" />
+					</p:outputPanel>
+				</p:panel>
+			</h:form>
+
+			<!-- DIALOG MEMBRO DA MESA -->
+			<ui:include src="dlg-mesa-diretora.xhtml" />
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
+

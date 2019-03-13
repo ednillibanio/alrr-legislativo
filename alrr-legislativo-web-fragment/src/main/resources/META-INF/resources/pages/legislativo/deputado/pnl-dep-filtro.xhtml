@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/components/commons"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough">
+
+	<!-- FILTRO DE PESQUISA -->
+	<p:panel header="Filtros" toggleable="true" styleClass="pnl-filtro">
+		<!-- BOTAO - NOVO SOLICITANTE -->
+		<!-- <f:facet name="header">
+			<al:botao-novo action="#{solicitanteController.novo()}"
+				update=":dlg-solicitante-novo :frm-solicitante-novo" />
+		</f:facet> -->
+
+		<div class="ui-fluid">
+			<p:panelGrid columns="4" layout="grid"
+				styleClass="ui-panelgrid-blank"
+				columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4"
+				id="pnl-filtro">
+
+				<!-- NOME -->
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText id="nome" label="Nome"
+					value="#{deputadoController.nome}" />
+
+				<!-- STATUS -->
+				<p:outputLabel value="Situação" for="situacao" />
+				<p:selectOneButton id="situacao" label="Situação"
+					value="#{deputadoController.situacao}">
+					<f:selectItems value="#{commonsEnumFactory.statusType}" var="sit"
+						itemValue="#{sit}" itemLabel="#{sit.label}" />
+				</p:selectOneButton>
+			</p:panelGrid>
+
+			<!-- PARTIDO POLITICO -->
+			<p:panelGrid columns="2" layout="grid"
+				columnClasses="ui-grid-col-2, ui-grid-col-10"
+				styleClass="ui-panelgrid-blank" id="pnl-partidos">
+
+				<p:outputLabel value="Partido" for="partido" />
+				<p:selectCheckboxMenu id="partido" multiple="true" filter="true"
+					value="#{deputadoController.partidosSelecionados}"
+					converter="#{entityConverter}" layout="responsive" columns="6"
+					label="Partidos Políticos">
+					<f:selectItems value="#{partidoPoliticoService.ativos}"
+						var="partido" itemValue="#{partido}" itemLabel="#{partido.sigla}" />
+				</p:selectCheckboxMenu>
+			</p:panelGrid>
+		</div>
+
+		<p:spacer height="5" />
+
+		<f:facet name="footer">
+			<div class="ui-g">
+
+
+				<!-- PESQUISAR -->
+				<div class="ui-lg-2 ui-md-2" />
+				<div class="ui-g-12 ui-lg-4 ui-md-4 ui-fluid">
+					<p:commandButton id="btn-pesquisar" value="Pesquisar"
+						icon="fa fa-fw fa-search" title="Pesquisar" styleClass="btn-lg"
+						action="#{deputadoController.pesquisar()}"
+						update="@form result msgs">
+					</p:commandButton>
+				</div>
+
+
+				<!-- LIMPAR -->
+				<div class="ui-g-12 ui-lg-4 ui-md-4 ui-fluid">
+					<p:commandButton value="Limpar" id="btn-limpar"
+						icon="fa fa-fw fa-refresh" title="Limpar" styleClass="btn-lg"
+						actionListener="#{deputadoController.limpar()}" update="@form" />
+				</div>
+				<div class="ui-lg-2 ui-md-2" />
+			</div>
+		</f:facet>
+	</p:panel>
+</ui:composition>

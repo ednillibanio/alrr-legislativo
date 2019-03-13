@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/components/commons"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:shiro="http://shiro.apache.org/tags"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" lang="pt-br">
+
+<ui:composition template="/single-page.xhtml">
+	<ui:define name="content">
+		<o:form id="frm-autenticacao">
+			<p:growl id="msgs" />
+			<p:tooltip />
+			<p:spacer height="80px" />
+
+			<o:importConstants type="br.leg.al.rr.seguranca.domain.Sistemas"
+				var="Sistemas" />
+
+			<div class="ui-g ui-fluid">
+				<div class="ui-md-3 ui-lg-3 nopad" />
+				<div class="ui-md-6 ui-lg-6 nopad">
+					<shiro:hasPermission name="#{Sistemas.AGENDA_DEPUTADO.outcome}">
+						<div class="ui-g">
+							<p:commandLink id="agenda" value="Sistema de Agenda"
+								action="#{sessaoController.navegar(Sistemas.AGENDA_DEPUTADO)}">
+							</p:commandLink>
+						</div>
+					</shiro:hasPermission>
+				</div>
+			</div>
+		</o:form>
+	</ui:define>
+</ui:composition>
+</html>

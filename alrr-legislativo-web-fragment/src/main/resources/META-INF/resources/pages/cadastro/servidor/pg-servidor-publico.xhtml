@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+	xmlns:ph="http://xmlns.jcp.org/jsf/passthrough" lang="pt-br">
+
+<ui:composition template="/default.xhtml">
+
+	<ui:define name="content">
+		<div class="ui-responsive">
+
+			<div class="ui-g ui-responsive">
+				<div class="ui-md-2 ui-lg-1" />
+				<div class="ui-md-8 ui-lg-10">
+					<div class="ui-g nopad">
+						<h1 class="view-titulo" id="pg-titulo">
+							<strong>Pesquisar Servidor Público</strong>
+						</h1>
+					</div>
+					<p:separator />
+					<div class="ui-g nopad" style="float: right">
+						<p:outputLabel id="info"
+							styleClass="fa fa-info-circle fa-lg fa-4x"
+							style="font-size:48px;"
+							title="Esta funcionalidade é responsável por manter os perfis de usuário. Um perfil de usuário pode ser associados a vários sistemas. Para que o perfil fique disponível no sistema, é necessário vinculá-lo. Para isso, acesse o menu Sistema e Perfis. " />
+					</div>
+
+					<p:spacer height="20" />
+
+					<o:form id="frm-servidor-pesquisar">
+
+						<p:blockUI widgetVar="block-view" trigger="btn-pesquisar"
+							block="frm-servidor-pesquisar">
+						</p:blockUI>
+
+
+
+
+						<span class="ui-g ui-fluid" style="margin-top: 30px;"><i><b>(*)</b>
+								Informe pelo menos um campo do filtro.</i></span>
+						<ui:include src="componentes/pnl-servidor-filtro.xhtml" />
+
+						<p:messages id="msgs" styleClass="msgs" />
+
+						<!-- RESULTADO PESQUISA -->
+						<p:outputPanel
+							rendered="#{servidorPublicoController.entities.size()>0}">
+							<p:separator />
+							<ui:include src="componentes/pnl-servidor-resultado.xhtml" />
+						</p:outputPanel>
+
+					</o:form>
+				</div>
+				<div class="ui-md-2 ui-lg-1" />
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+</html>
+
