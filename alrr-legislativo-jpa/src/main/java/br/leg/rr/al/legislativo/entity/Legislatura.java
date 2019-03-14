@@ -58,9 +58,15 @@ public class Legislatura extends Dominio {
 	 */
 	@Transient
 	public String getPeriodo() {
+
 		if (StringUtils.isNotBlank(anoInicio) && StringUtils.isNotBlank(anoFim)) {
 			return anoInicio.concat(" - ").concat(anoFim);
+		} else if (StringUtils.isNotBlank(anoInicio)) {
+			return anoInicio.concat(" - ");
+		} else if (StringUtils.isNotBlank(anoFim)) {
+			return " - ".concat(anoFim);
+		} else {
+			return null;
 		}
-		return null;
 	}
 }

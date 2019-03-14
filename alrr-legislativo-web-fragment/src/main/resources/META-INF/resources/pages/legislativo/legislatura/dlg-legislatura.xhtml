@@ -69,7 +69,6 @@
 		<al:campo value="Ano Início" for="anoinicio">
 			<p:inputText id="anoinicio" title="Início do período da legislatura"
 				value="#{legislaturaController.entity.anoInicio}">
-				<f:validateLength minimum="4" maximum="4" for="anoinicio" />
 				<f:validateLongRange minimum="1950" maximum="2050" />
 			</p:inputText>
 		</al:campo>
@@ -78,7 +77,6 @@
 		<al:campo value="Ano Fim" for="anofim">
 			<p:inputText id="anofim" title="Fim do período da legislatura"
 				value="#{legislaturaController.entity.anoFim}">
-				<f:validateLength minimum="4" maximum="4" for="anofim" />
 				<f:validateLongRange minimum="1950" maximum="2050" for="anofim" />
 			</p:inputText>
 		</al:campo>
