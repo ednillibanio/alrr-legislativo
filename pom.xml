@@ -2,16 +2,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>br.leg.rr.al</groupId>
-		<artifactId>alrr-bibliotecas</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
-	</parent>
 	<groupId>br.leg.rr.al.legislativo</groupId>
 	<artifactId>alrr-legislativo</artifactId>
 	<packaging>pom</packaging>
 	<name>alrr-legislativo</name>
 	<description>Projeto do Legislativo</description>
+	<parent>
+		<groupId>br.leg.rr.al</groupId>
+		<artifactId>alrr-bibliotecas</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
 	<organization>
 		<name>Assembleia Legislativa de Roraima</name>
 		<url>https://www.al.rr.leg.br</url>
@@ -30,13 +30,12 @@
 		<al.rr.legislativo.version>1.0.0-SNAPSHOT</al.rr.legislativo.version>
 	</properties>
 	<modules>
-		<module>alrr-legislativo-utils</module>		
+		<module>alrr-legislativo-utils</module>
 		<module>alrr-legislativo-jpa</module>
 		<module>alrr-legislativo-ejb</module>
 		<module>alrr-legislativo-ear</module>
 		<module>alrr-legislativo-web</module>
 		<module>alrr-legislativo-web-fragment</module>
-
 	</modules>
 	<dependencyManagement>
 		<dependencies>
