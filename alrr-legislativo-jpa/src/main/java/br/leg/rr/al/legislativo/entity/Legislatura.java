@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Transient;
 
+import org.apache.commons.lang3.StringUtils;
+
 import br.leg.rr.al.core.jpa.Dominio;
 
 @Entity
@@ -48,7 +50,6 @@ public class Legislatura extends Dominio {
 		this.anoFim = anoFim;
 	}
 
-	
 	/**
 	 * Método transiente que retorna uma string com o ano inicio e ano fim. Ex.
 	 * "2010 - 2014"
@@ -57,6 +58,9 @@ public class Legislatura extends Dominio {
 	 */
 	@Transient
 	public String getPeriodo() {
-		return anoInicio.concat(" - ").concat(anoFim);
+		if (StringUtils.isNotBlank(anoInicio) && StringUtils.isNotBlank(anoFim)) {
+			return anoInicio.concat(" - ").concat(anoFim);
+		}
+		return null;
 	}
 }

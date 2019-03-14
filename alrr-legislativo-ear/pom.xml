@@ -34,8 +34,10 @@
 				<inherited>true</inherited>
 				<configuration>
 					<modules>
-	<!-- <ejbModule> <groupId>br.leg.rr.al.legislativo</groupId> <artifactId>alrr-legislativo-ejb</artifactId> 
-		</ejbModule> -->
+						<ejbModule>
+							<groupId>br.leg.rr.al.legislativo</groupId>
+							<artifactId>alrr-legislativo-ejb</artifactId>
+						</ejbModule>
 						<webModule>
 							<groupId>br.leg.rr.al.legislativo</groupId>
 							<artifactId>alrr-legislativo-web</artifactId>

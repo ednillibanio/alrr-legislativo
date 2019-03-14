@@ -21,7 +21,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:al="http://xmlns.jcp.org/jsf/composite/componentes/core"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/facelets/core"
 	xmlns:alcore="http://al.rr.leg.br/facelets/core"
 	xmlns:o="http://omnifaces.org/ui"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
@@ -39,10 +39,20 @@
 		<!--   N O M E   -->
 		<p:column id="nome" sortBy="#{var.nome}" headerText="Nome">
 			<h:outputText value="#{var.nome}" />
-		</p:column> -->
+		</p:column> 
+		
+		<!--   A N O  I N I C I O   -->
+		<p:column id="inicio" sortBy="#{var.anoInicio}" headerText="Início" width="20%">
+			<h:outputText value="#{var.anoInicio}" />
+		</p:column>
+		
+		<!--   A N O  F I M   -->
+		<p:column id="fim" sortBy="#{var.anoFim}" headerText="Fim" width="20%">
+			<h:outputText value="#{var.anoFim}" />
+		</p:column> 
 		
 		<!--   S I T U A Ç Ã O   -->
-		<p:column id="sit" headerText="Situação" width="50%">
+		<p:column id="sit" headerText="Situação" width="20%">
 			<h:outputText value="#{var.situacao.label}" />
 		</p:column>
 

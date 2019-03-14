@@ -21,7 +21,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:al="http://xmlns.jcp.org/jsf/composite/componentes/core"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/facelets/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:alcore="http://al.rr.leg.br/facelets/core"
 	xmlns:alloc="http://al.rr.leg.br/facelets/localidade"
@@ -85,7 +85,7 @@
 
 		<!--   C A M P O:  S I T U A Ç Ã O  -->
 		<al:campo value="Situação" for="situacao">
-			<al:select-situacao-button id="situacao"
+			<al:selectSituacaoOneButton id="situacao"
 				value="#{legislaturaController.entity.situacao}" required="true" />
 		</al:campo>
 

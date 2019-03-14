@@ -21,7 +21,7 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-	xmlns:al="http://xmlns.jcp.org/jsf/composite/componentes/core"
+	xmlns:al="http://xmlns.jcp.org/jsf/composite/facelets/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:alcore="http://al.rr.leg.br/facelets/core"
 	xmlns:alloc="http://al.rr.leg.br/facelets/localidade"
@@ -49,8 +49,8 @@
 		<al:campo-detalhe label="Legislatura"
 			value="#{legislaturaController.entity.nome}" />
 
-		<al:campo-detalhe label="Período"
-			value="#{legislaturaController.entity.periodo}" />
+		<!-- <al:campo-detalhe label="Período"
+			value="#{legislaturaController.entity.periodo}" /> -->
 
 		<al:campo-detalhe label="Situação"
 			value="#{legislaturaController.entity.situacao.label}" />
